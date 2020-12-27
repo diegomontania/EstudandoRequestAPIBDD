@@ -1,41 +1,56 @@
 ﻿using System;
 using TechTalk.SpecFlow;
-using BddAPISpecflow.RequestAPI;
 using System.Threading.Tasks;
 using Xunit;
+using BddAPISpecflow.ClassesTest.RequestAPI;
+using FluentAssertions;
 
 namespace BddAPISpecflow.Steps
 {
     [Binding]
     public class RequisitaAPIStepsDefinitions
     {
-        private readonly RequestApi _requestApi;
+        private readonly ResquestApiRestSharp _requestApi;
 
         public string RespostaApi { get; set; }
 
-        public RequisitaAPIStepsDefinitions(RequestApi requestApi)
+        public RequisitaAPIStepsDefinitions(ResquestApiRestSharp requestApi)
         {
             _requestApi = requestApi;
         }
 
-        [Given(@"a uri")]
-        public void DadoAUri()
+        [Given(@"a uri '(.*)' e (.*) com o codigo postal (.*)")]
+        public void DadoAUriEComOCodigoPostal(string url, string pais, string codigoPostal)
         {
-            Console.WriteLine("oi");
+            //utilizar regex, para remover esses caracteres posteriormente
+            pais = pais.Replace("\"", "");
+            codigoPostal = codigoPostal.Replace("\"", "");
+
+            _requestApi.CallGet(url, pais, codigoPostal);
+            Assert.NotNull(_requestApi.RespostaRequest);
         }
-        
-        [Given(@"e obtiver resposta ok")]
-        public async Task<string> DadoEObtiverRespostaOk()
+
+        [Given(@"se a resposta for (.*)")]
+        public void DadoEARespostaFor(int number)
         {
-            RespostaApi = await _requestApi.TestRequest();
-            Assert.NotNull(RespostaApi);
-            return RespostaApi; /* melhorar a resposta aqui */
+            var statusCode = (int)_requestApi.RespostaRequest.StatusCode;
+            Assert.Equal(statusCode, number);
         }
+
+        [Given(@"o codigo do pais for (.*) e o codigo postal for (.*)")]
+        public void DadoOCodigoDoPaisForEOCodigoPostalFor(string codigoPais, string codigoPostal)
+        {
+            //imeplementar comparacao aqui
+            Console.WriteLine("");
+        }
+
 
         [Then(@"exibe o resultado")]
         public void EntaoExibeOResultado()
         {
-            Console.WriteLine(RespostaApi.ToString()); 
+            //melhorar resultado aqui 
+            var resultadoResposta = _requestApi.DeserializeResposta();
+            Console.WriteLine(resultadoResposta); 
         }
     }
 }

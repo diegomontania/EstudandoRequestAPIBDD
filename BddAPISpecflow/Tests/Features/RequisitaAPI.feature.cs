@@ -80,17 +80,26 @@ namespace BddAPISpecflow.Tests.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="1) Requisitar informações de uma api")]
+        [Xunit.SkippableTheoryAttribute(DisplayName="1) Requisitar informações de uma api")]
         [Xunit.TraitAttribute("FeatureTitle", "RequisitaAPI")]
         [Xunit.TraitAttribute("Description", "1) Requisitar informações de uma api")]
         [Xunit.TraitAttribute("Category", "mytag")]
-        public virtual void _1RequisitarInformacoesDeUmaApi()
+        [Xunit.InlineDataAttribute("\"US\"", "\"90210\"", new string[0])]
+        [Xunit.InlineDataAttribute("\"BR\"", "\"01000-000\"", new string[0])]
+        public virtual void _1RequisitarInformacoesDeUmaApi(string codigoPais, string codigoPostal, string[] exampleTags)
         {
-            string[] tagsOfScenario = new string[] {
+            string[] @__tags = new string[] {
                     "mytag"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("CodigoPais", codigoPais);
+            argumentsOfScenario.Add("CodigoPostal", codigoPostal);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("1) Requisitar informações de uma api", null, tagsOfScenario, argumentsOfScenario);
-#line 6
+#line 11
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -110,13 +119,16 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 7
- testRunner.Given("a uri", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+#line 12
+ testRunner.Given(string.Format("a uri \'http://api.zippopotam.us/\' e {0} com o codigo postal {1}", codigoPais, codigoPostal), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
-#line 8
- testRunner.And("e obtiver resposta ok", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line 13
+ testRunner.And("e a resposta for 200", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
-#line 9
+#line 14
+ testRunner.And(string.Format("o codigo do pais for {0} e o codigo postal for {1}", codigoPais, codigoPostal), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line hidden
+#line 15
  testRunner.Then("exibe o resultado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
 #line hidden
             }

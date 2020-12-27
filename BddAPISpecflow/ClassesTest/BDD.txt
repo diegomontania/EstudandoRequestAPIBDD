@@ -1,0 +1,13 @@
+#language: pt-br
+
+Funcionalidade: [NOME DA FUNCIONALIDADE] EX : CADASTRO
+	[DESCRICAO DA FUNCIONALIDADE E FINALIDADE]
+	como um usuario
+	desejo me cadastrar na aplicação
+	assim posso acessar o sistema e utilizar suas funcionalidades
+
+Cenario: [DESCRICAO DO CENARIO] 1) Quando usuário acessar a página de cadastro, o formulário deverá ser exibido
+	Dado [pre requisito] Um visitante não cadastrado ter acessado tela inicial
+	Quando [acao] Clicar no botão quero me cadastrar
+	Entao [resultado da acao] Formulário de cadastro será exibido com os campos : Nome, Telefone, Email e Senha
+
