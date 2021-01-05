@@ -6,12 +6,11 @@ Funcionalidade: RequisitaAPI
 
 @mytag
 Cenario: 1) Requisitar informações de uma api
-	Dado a uri 'http://api.zippopotam.us/' e <CodigoPais> com o codigo postal <CodigoPostal>
+	Dado a url 'http://api.zippopotam.us/' e <AbreviacaoDoPais> com o codigo postal <CodigoPostal>
 	E se a resposta for 200
-	E o codigo do pais for <CodigoPais> e o codigo postal for <CodigoPostal>
-	Entao exibe o resultado
+	Entao o <Pais> deve conter <AbreviacaoDoPais>
 
 Exemplos: 
-	| CodigoPais | CodigoPostal |
-	| "US"       | "90210"      |
-	| "BR"       | "01000-000"  |
+	| Pais            | AbreviacaoDoPais | CodigoPostal |
+	| "United States" | "US"		     | "90210"      |
+	| "Brazil"        | "BR"             | "01000-000"  |

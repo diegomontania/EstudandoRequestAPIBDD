@@ -1,9 +1,7 @@
 ﻿using System;
 using TechTalk.SpecFlow;
-using System.Threading.Tasks;
 using Xunit;
-using BddAPISpecflow.ClassesTest.RequestAPI;
-using FluentAssertions;
+using BddAPISpecflow.Helpers.RequestAPI;
 
 namespace BddAPISpecflow.Steps
 {
@@ -19,14 +17,14 @@ namespace BddAPISpecflow.Steps
             _requestApi = requestApi;
         }
 
-        [Given(@"a uri '(.*)' e (.*) com o codigo postal (.*)")]
-        public void DadoAUriEComOCodigoPostal(string url, string pais, string codigoPostal)
+        [Given(@"a url '(.*)' e (.*) com o codigo postal (.*)")]
+        public void DadoAUrlEComOCodigoPostal(string url, string abreviacaoPais, string codigoPostal)
         {
-            //utilizar regex, para remover esses caracteres posteriormente
-            pais = pais.Replace("\"", "");
+            //remove caracteres que ficam da string json
+            abreviacaoPais = abreviacaoPais.Replace("\"", "");
             codigoPostal = codigoPostal.Replace("\"", "");
 
-            _requestApi.CallGet(url, pais, codigoPostal);
+            _requestApi.ChamaAPI(url, abreviacaoPais, codigoPostal);
             Assert.NotNull(_requestApi.RespostaRequest);
         }
 
@@ -37,20 +35,16 @@ namespace BddAPISpecflow.Steps
             Assert.Equal(statusCode, number);
         }
 
-        [Given(@"o codigo do pais for (.*) e o codigo postal for (.*)")]
-        public void DadoOCodigoDoPaisForEOCodigoPostalFor(string codigoPais, string codigoPostal)
+        [Then(@"o (.*) deve conter (.*)")]
+        public void EntaoODeveConter(string pais, string abreviacaoPais)
         {
-            //imeplementar comparacao aqui
-            Console.WriteLine("");
-        }
+            pais = pais.Replace("\"", "");
+            abreviacaoPais = abreviacaoPais.Replace("\"", "");
 
+            _requestApi.DeserializeResposta();
 
-        [Then(@"exibe o resultado")]
-        public void EntaoExibeOResultado()
-        {
-            //melhorar resultado aqui 
-            var resultadoResposta = _requestApi.DeserializeResposta();
-            Console.WriteLine(resultadoResposta); 
+            Assert.Contains(pais, _requestApi.RespostaLocalizacao.Pais);
+            Assert.Contains(abreviacaoPais, _requestApi.RespostaLocalizacao.PaisAbreviacao);
         }
     }
 }

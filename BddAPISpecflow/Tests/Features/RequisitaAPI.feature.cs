@@ -40,7 +40,7 @@ namespace BddAPISpecflow.Tests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("pt-br"), "Tests/Features", "RequisitaAPI", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("pt-br"), "Tests/Features", "RequisitaAPI", "\tEnviar um código de pais e codigo postal\r\n\tE receber suas informações via json", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -84,9 +84,9 @@ namespace BddAPISpecflow.Tests.Features
         [Xunit.TraitAttribute("FeatureTitle", "RequisitaAPI")]
         [Xunit.TraitAttribute("Description", "1) Requisitar informações de uma api")]
         [Xunit.TraitAttribute("Category", "mytag")]
-        [Xunit.InlineDataAttribute("\"US\"", "\"90210\"", new string[0])]
-        [Xunit.InlineDataAttribute("\"BR\"", "\"01000-000\"", new string[0])]
-        public virtual void _1RequisitarInformacoesDeUmaApi(string codigoPais, string codigoPostal, string[] exampleTags)
+        [Xunit.InlineDataAttribute("\"United States\"", "\"US\"", "\"90210\"", new string[0])]
+        [Xunit.InlineDataAttribute("\"Brazil\"", "\"BR\"", "\"01000-000\"", new string[0])]
+        public virtual void _1RequisitarInformacoesDeUmaApi(string pais, string abreviacaoDoPais, string codigoPostal, string[] exampleTags)
         {
             string[] @__tags = new string[] {
                     "mytag"};
@@ -96,10 +96,11 @@ namespace BddAPISpecflow.Tests.Features
             }
             string[] tagsOfScenario = @__tags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("CodigoPais", codigoPais);
+            argumentsOfScenario.Add("Pais", pais);
+            argumentsOfScenario.Add("AbreviacaoDoPais", abreviacaoDoPais);
             argumentsOfScenario.Add("CodigoPostal", codigoPostal);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("1) Requisitar informações de uma api", null, tagsOfScenario, argumentsOfScenario);
-#line 11
+#line 8
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -119,17 +120,14 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 12
- testRunner.Given(string.Format("a uri \'http://api.zippopotam.us/\' e {0} com o codigo postal {1}", codigoPais, codigoPostal), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+#line 9
+ testRunner.Given(string.Format("a url \'http://api.zippopotam.us/\' e {0} com o codigo postal {1}", abreviacaoDoPais, codigoPostal), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
-#line 13
- testRunner.And("e a resposta for 200", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line 10
+ testRunner.And("se a resposta for 200", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
-#line 14
- testRunner.And(string.Format("o codigo do pais for {0} e o codigo postal for {1}", codigoPais, codigoPostal), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
-#line hidden
-#line 15
- testRunner.Then("exibe o resultado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line 11
+ testRunner.Then(string.Format("o {0} deve conter {1}", pais, abreviacaoDoPais), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
 #line hidden
             }
             this.ScenarioCleanup();
