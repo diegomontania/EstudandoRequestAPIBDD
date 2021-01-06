@@ -84,9 +84,9 @@ namespace BddAPISpecflow.Tests.Features
         [Xunit.TraitAttribute("FeatureTitle", "RequisitaAPI")]
         [Xunit.TraitAttribute("Description", "1) Requisitar informações de uma api")]
         [Xunit.TraitAttribute("Category", "mytag")]
-        [Xunit.InlineDataAttribute("\"United States\"", "\"US\"", "\"90210\"", new string[0])]
-        [Xunit.InlineDataAttribute("\"Brazil\"", "\"BR\"", "\"01000-000\"", new string[0])]
-        public virtual void _1RequisitarInformacoesDeUmaApi(string pais, string abreviacaoDoPais, string codigoPostal, string[] exampleTags)
+        [Xunit.InlineDataAttribute("\"United States\"", "\"US\"", "\"California\"", "\"90210\"", new string[0])]
+        [Xunit.InlineDataAttribute("\"Brazil\"", "\"BR\"", "\"Sao Paulo\"", "\"01000-000\"", new string[0])]
+        public virtual void _1RequisitarInformacoesDeUmaApi(string pais, string abreviacaoDoPais, string estado, string codigoPostal, string[] exampleTags)
         {
             string[] @__tags = new string[] {
                     "mytag"};
@@ -98,6 +98,7 @@ namespace BddAPISpecflow.Tests.Features
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("Pais", pais);
             argumentsOfScenario.Add("AbreviacaoDoPais", abreviacaoDoPais);
+            argumentsOfScenario.Add("Estado", estado);
             argumentsOfScenario.Add("CodigoPostal", codigoPostal);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("1) Requisitar informações de uma api", null, tagsOfScenario, argumentsOfScenario);
 #line 8
@@ -127,7 +128,10 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.And("se a resposta for 200", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 11
- testRunner.Then(string.Format("o {0} deve conter {1}", pais, abreviacaoDoPais), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+ testRunner.And(string.Format("o {0} deve conter {1}", pais, abreviacaoDoPais), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line hidden
+#line 12
+ testRunner.Then(string.Format("o primeiro {0} deste pais deve retornar uma \'latitude\' e \'longitude\'", estado), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
 #line hidden
             }
             this.ScenarioCleanup();
