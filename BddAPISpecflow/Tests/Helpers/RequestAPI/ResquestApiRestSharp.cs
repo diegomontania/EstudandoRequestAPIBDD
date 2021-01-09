@@ -21,10 +21,8 @@ namespace BddAPISpecflow.Helpers.RequestAPI
             RespostaRequest = _cliente.Execute(_requisicao);
         }
 
+        //recebe a resposta da api na classe 'RespostaLocalização'
         public void DeserializeResposta()
-        {
-            //recebe a resposta da api na classe 'RespostaLocalização'
-            RespostaLocalizacao =  JsonConvert.DeserializeObject<RespostaLocalizacao>(RespostaRequest.Content);
-        }
+            => RespostaLocalizacao = JsonConvert.DeserializeObject<RespostaLocalizacao>(RespostaRequest.Content);
     }
 }
